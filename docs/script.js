@@ -33,9 +33,8 @@ function drawChart(dataset) {
   const platforms = dataset['children'].map((child) => {
     return child.name;
   });
-  console.log(platforms);
-  console.log(platforms.length);
 
+  // Array of colors
   const colors = platforms.map((platform, i) => {
     let t = i / platforms.length;
     return d3.interpolateTurbo(t);
@@ -77,4 +76,42 @@ function drawChart(dataset) {
   .attr('data-category', (d) => d.data.category )
   .attr('data-value', (d) => d.data.value )
   .attr('class', 'tile'); // required for the fcc test
+
+  // legend
+
+  // Define legend area
+  const legendSvg = d3
+    .select('#legend')
+    .append('svg')
+    .attr('width', 1000)
+    .attr('height', 150);
+
+  // Display legend colors
+  legendSvg
+    .selectAll('rect')
+    .data(colors)
+    .enter()
+    .append('rect')
+    .attr('width', 20)
+    .attr('height', 20)
+    .attr('fill', (d, i) => colors[i])
+    .attr('x', (d, i) => (i % 5) * 100)
+    .attr('y', (d, i) => Math.floor(i / 5) * 30)
+    .attr('class', 'legend-item'); // required for the fcc test
+
+  // Display legend labels
+  legendSvg
+    .selectAll('text')
+    .data(platforms)
+    .enter()
+    .append('text')
+    .text((d) => d)
+    .attr('width', 50)
+    .attr('height', 20)
+    .attr('x', (d, i) => (i % 5) * 100 + 25)
+    .attr('y', (d, i) => Math.floor(i / 5) * 30 + 15);
+
+  // Configure axes
+  const legendAxis = d3.axisBottom(legendScale).tickFormat(d3.format('.1'));
+
 }
