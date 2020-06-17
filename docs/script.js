@@ -75,7 +75,31 @@ function drawChart(dataset) {
   .attr('data-name', (d) => d.data.name )
   .attr('data-category', (d) => d.data.category )
   .attr('data-value', (d) => d.data.value )
-  .attr('class', 'tile'); // required for the fcc test
+  .attr('class', 'tile') // required for the fcc test
+  .on('mouseover', function(d) { // tooltip
+    console.log("mouseover");
+    tooltip
+        .style('visibility', 'visible')
+    // id is required for fcc test
+        .html('<p>Value: ' + d.data.value + '</p>')
+    // required for fcc test
+        .attr('data-value', d.data.value );
+  })
+  .on('mousemove', function(d) {
+    tooltip
+        .style('top', d3.event.pageY - 20 + 'px')
+        .style('left', d3.event.pageX + 10 + 'px');
+  })
+  .on('mouseout', function(d) {
+    tooltip.style('visibility', 'hidden');
+  });
+
+  // Tooltip
+  const tooltip = d3
+    .select('body')
+    .append('div')
+    .attr('class', 'tooltip')
+    .attr('id', 'tooltip'); // required for fcc test
 
   // legend
 

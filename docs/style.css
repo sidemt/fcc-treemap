@@ -1,0 +1,16 @@
+.tile:hover {
+  fill: #ff66ff;
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  font: 12px;
+  background: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+  visibility: hidden;
+}
